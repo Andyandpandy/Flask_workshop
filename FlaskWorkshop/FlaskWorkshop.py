@@ -5,7 +5,7 @@ from connection import Firebase_conn
 
 app = Flask(__name__)
 
-app.secret_key = os.urandom(24)
+app.secret_key = "andy"
 
 conn = Firebase_conn()
 
@@ -40,8 +40,6 @@ def login():
         try:
             username = request.form['username']
             password = request.form['password']
-            app.logger.error(username)
-            app.logger.error(password)
 
             # Attempt to find user on firebase
             attempted_username = conn.get_user(username)
@@ -54,6 +52,7 @@ def login():
                 return redirect(url_for('home_page'))
 
             app.logger.error("The users password is {}".format(conn.get_user('Andy')))
+            return redirect(url_for('login'))
         except KeyError:
             pass
         return redirect(url_for('login'))
